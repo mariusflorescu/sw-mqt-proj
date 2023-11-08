@@ -4,8 +4,8 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "docker-compose -f ./docker/docker-compose.yaml -p traffic-control up",
-     "dev": "concurrently -n UI,Agent -c blue,red \"yarn workspace @traffic-control/ui dev\" \"yarn workspace @traffic-control/agent dev\""
+    "prepare-env": "docker-compose -f ./docker/docker-compose.yaml -p traffic-control up",
+    "dev": "concurrently -n UI,Agent,Accident-Consumer -c blue,red,green \"yarn workspace @traffic-control/ui dev\" \"yarn workspace @traffic-control/agent dev\" \"yarn workspace @traffic-control/accident-consumer dev\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
