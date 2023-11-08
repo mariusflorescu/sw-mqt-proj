@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "prepare": "docker-compose -f ./docker/docker-compose.yaml -p traffic-control up"
+  }
+}
