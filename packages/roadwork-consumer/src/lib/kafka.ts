@@ -6,5 +6,5 @@ const kafka = new Kafka({
 });
 
 export const kafkaConsumer = kafka.consumer({
-  groupId: "traffic-control-group",
+  groupId: "roadwork-group",
 });

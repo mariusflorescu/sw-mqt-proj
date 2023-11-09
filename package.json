@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "prepare-env": "docker-compose -f ./docker/docker-compose.yaml -p traffic-control up",
-    "dev": "concurrently -n UI,Agent,Accident-Consumer -c blue,red,green \"yarn workspace @traffic-control/ui dev\" \"yarn workspace @traffic-control/agent dev\" \"yarn workspace @traffic-control/accident-consumer dev\""
+    "dev": "concurrently -n UI,Agent,Accident-Consumer,Roadwork-Consumer,Traffic-Jam-Consumer -c blue,red,green,cyan,magenta \"yarn workspace @traffic-control/ui dev\" \"yarn workspace @traffic-control/agent dev\" \"yarn workspace @traffic-control/accident-consumer dev\" \"yarn workspace @traffic-control/roadwork-consumer dev\" \"yarn workspace @traffic-control/traffic-jam-consumer dev\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

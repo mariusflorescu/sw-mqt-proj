@@ -10,6 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
+enum EventType {
+  accident
+  roadwork
+  traffic_jam
+  event
+}
+
+model Event {
   id Int @id @default(autoincrement())
+  street String
+  eventType EventType
+  timestamp DateTime
 }

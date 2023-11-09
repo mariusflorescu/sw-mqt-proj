@@ -1,4 +1,4 @@
-import { db } from "@traffic-control/db";
+import { db, EventType } from "@traffic-control/db";
 import { kafkaConsumer } from "./lib/kafka";
 import { z } from "zod";
 
@@ -19,7 +19,14 @@ const run = async () => {
       if (!validatedMessage.success) return;
       const message = validatedMessage.data;
 
-      console.log(message);
+      console.log("🚨 ACCIDENT CONSUMER -> ingesting message");
+      await db.event.create({
+        data: {
+          street: message.street,
+          eventType: EventType.accident,
+          timestamp: new Date(message.timestamp),
+        },
+      });
     },
   });
 };

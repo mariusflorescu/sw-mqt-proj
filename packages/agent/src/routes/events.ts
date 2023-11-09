@@ -3,7 +3,7 @@ import { z } from "zod";
 import { kafkaProducer } from "../lib/kafka";
 
 const eventSchema = z.object({
-  type: z.enum(["accident", "roadwork", "traffic-jam"]),
+  type: z.enum(["accident", "roadwork", "traffic_jam"]),
   street: z.string(),
 });
 
