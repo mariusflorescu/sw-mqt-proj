@@ -1,3 +1,4 @@
+import { db } from "@traffic-control/db";
 import { kafkaConsumer } from "./lib/kafka";
 import { z } from "zod";
 

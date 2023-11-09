@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "main": "./src/index.ts",
+  "name": "@traffic-control/db",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.5.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.5.2",
+    "typescript": "^5.2.2"
+  }
+}
