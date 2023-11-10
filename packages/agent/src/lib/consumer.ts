@@ -22,17 +22,20 @@ export const consume = async (
       const validatedMessage = eventSchema.safeParse(rawMessage);
       if (!validatedMessage.success) return;
 
+      const now = new Date()
+
       const message = validatedMessage.data;
       await db.realEvent.create({
         data: {
           eventType: message.eventType,
           street: message.street,
+          timestamp: now,
         },
       });
       io.emit("event", {
         eventType: message.eventType,
         street: message.street,
-        timestamp: new Date(),
+        timestamp: now,
       });
     },
   });
