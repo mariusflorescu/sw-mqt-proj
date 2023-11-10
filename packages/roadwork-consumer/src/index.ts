@@ -1,6 +1,7 @@
-import { db } from "@traffic-control/db";
-import { kafkaConsumer } from "./lib/kafka";
+import { db, EventType } from "@traffic-control/db";
+import { kafkaConsumer, kafkaProducer } from "./lib/kafka";
 import { z } from "zod";
+import { sub } from "date-fns";
 
 const messageSchema = z.object({
   street: z.string(),
@@ -19,7 +20,40 @@ const run = async () => {
       if (!validatedMessage.success) return;
       const message = validatedMessage.data;
 
-      console.log(message);
+      const threeMinutesAgo = sub(new Date(message.timestamp), { minutes: 3 });
+
+      await db.event.create({
+        data: {
+          street: message.street,
+          eventType: EventType.roadwork,
+          timestamp: new Date(message.timestamp),
+        },
+      });
+
+      const cnt = await db.event.count({
+        where: {
+          eventType: EventType.roadwork,
+          street: message.street,
+          timestamp: {
+            gte: threeMinutesAgo,
+            lt: new Date(message.timestamp),
+          },
+        },
+      });
+
+      if (cnt === 2) {
+        kafkaProducer.send({
+          topic: "event",
+          messages: [
+            {
+              value: JSON.stringify({
+                eventType: EventType.roadwork,
+                street: message.street,
+              }),
+            },
+          ],
+        });
+      }
     },
   });
 };

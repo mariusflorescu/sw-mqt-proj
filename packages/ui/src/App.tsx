@@ -23,6 +23,11 @@ type Event = z.infer<typeof eventSchema>;
 
 export default function App() {
   const [events, setEvents] = useState<Event[]>([]);
+  const [street, setStreet] = useState<string>("");
+
+  const handleStreetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStreet(event.target.value);
+  };
 
   useEffect(() => {
     socket.on("event", (rawEvent) => {
@@ -37,12 +42,24 @@ export default function App() {
       <section className="flex flex-col items-center justify-center space-y-4">
         <div className="w-full max-w-sm">
           <Label htmlFor="street">Street</Label>
-          <Input id="street" placeholder="Street" type="text" />
+          <Input
+            id="street"
+            placeholder="Street"
+            type="text"
+            value={street}
+            onChange={handleStreetChange}
+          />
         </div>
         <div className="flex space-x-4">
-          <Button>Accident</Button>
-          <Button>Roadwork</Button>
-          <Button>Traffic Jam</Button>
+          <Button eventType="accident" street={street}>
+            Accident
+          </Button>
+          <Button eventType="roadwork" street={street}>
+            Roadwork
+          </Button>
+          <Button eventType="traffic_jam" street={street}>
+            Traffic Jam
+          </Button>
         </div>
       </section>
       <Table className="max-w-lg">
