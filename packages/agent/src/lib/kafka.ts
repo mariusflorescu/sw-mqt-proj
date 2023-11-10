@@ -6,3 +6,6 @@ const kafka = new Kafka({
 });
 
 export const kafkaProducer = kafka.producer();
+export const kafkaConsumer = kafka.consumer({
+  groupId: "event-group",
+});

@@ -18,8 +18,15 @@ enum EventType {
 }
 
 model Event {
-  id Int @id @default(autoincrement())
-  street String
+  id        Int       @id @default(autoincrement())
+  street    String
   eventType EventType
   timestamp DateTime
+}
+
+model RealEvent {
+  id        Int       @id @default(autoincrement())
+  street    String
+  eventType EventType
+  timestamp DateTime  @default(now())
 }

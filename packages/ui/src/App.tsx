@@ -1,8 +1,16 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { socket } from "./lib/socket";
+import { useEffect } from "react";
 
 export default function App() {
+  useEffect(() => {
+    socket.on("event", (event) => {
+      console.log(event);
+    });
+  }, []);
+
   return (
     <section className="flex flex-col items-center justify-center h-screen space-y-4">
       <div className="w-full max-w-sm">
