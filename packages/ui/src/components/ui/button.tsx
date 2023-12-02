@@ -45,32 +45,13 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      onClick,
-      eventType,
-      street,
-      ...props
-    },
+    { className, variant, size, asChild = false, eventType, street, ...props },
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
 
-    const handleClick = () => {
-      if (onClick) {
-        onClick();
-      }
-      axios
-        .post("/api/events", { event: { eventType, street } })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error("Error making POST request:", error);
-        });
+    const handleClick = async () => {
+      await axios.post("/api/events", { type: eventType, street });
     };
 
     return (

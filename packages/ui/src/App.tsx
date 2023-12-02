@@ -33,12 +33,11 @@ export default function App() {
     socket.on("event", (rawEvent) => {
       const event = eventSchema.parse(rawEvent);
       setEvents([event, ...events]);
-      console.log(events);
     });
   }, [events, setEvents]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen space-y-4">
+    <div className="flex flex-col items-center justify-center h-screen space-y-12">
       <section className="flex flex-col items-center justify-center space-y-4">
         <div className="w-full max-w-sm">
           <Label htmlFor="street">Street</Label>
@@ -62,25 +61,27 @@ export default function App() {
           </Button>
         </div>
       </section>
-      <Table className="max-w-lg">
-        <TableCaption>A realtime list of events</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Event Type</TableHead>
-            <TableHead>Street</TableHead>
-            <TableHead>Tiemstamp</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {events.map(({ eventType, street, timestamp }) => (
-            <TableRow key={`${eventType}-${street}-${timestamp}`}>
-              <TableCell className="font-medium">{eventType}</TableCell>
-              <TableCell>{street}</TableCell>
-              <TableCell>{timestamp}</TableCell>
+      <div className="w-1/2">
+        <Table>
+          <TableCaption>A realtime list of events</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Event Type</TableHead>
+              <TableHead>Street</TableHead>
+              <TableHead>Tiemstamp</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {events.map(({ eventType, street, timestamp }) => (
+              <TableRow key={`${eventType}-${street}-${timestamp}`}>
+                <TableCell className="font-medium">{eventType}</TableCell>
+                <TableCell>{street}</TableCell>
+                <TableCell>{timestamp}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

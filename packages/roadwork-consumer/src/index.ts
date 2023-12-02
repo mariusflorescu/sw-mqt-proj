@@ -10,6 +10,7 @@ const messageSchema = z.object({
 
 const run = async () => {
   await kafkaConsumer.connect();
+  await kafkaProducer.connect();
   await kafkaConsumer.subscribe({ topic: "roadwork", fromBeginning: true });
   await kafkaConsumer.run({
     eachMessage: async ({ message: bufMsg }) => {
